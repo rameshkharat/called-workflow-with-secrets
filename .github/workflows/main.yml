@@ -1,7 +1,18 @@
 name: docker pull and push
 on: 
   workflow_call:
-  
+    inputs:
+      image_name:
+        required: true
+        type: string
+      tag:
+        type: string
+    secrets:
+      DOCKER_USER:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
+      
 jobs:
   build:
     runs-on: ubuntu-latest
