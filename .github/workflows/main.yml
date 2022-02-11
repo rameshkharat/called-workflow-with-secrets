@@ -1,7 +1,7 @@
 name: docker pull and push
 on: workflow_call
  inputs:
-   username:
+   ENVIRONMENT:
      required: true
      type: string
    secrets:
