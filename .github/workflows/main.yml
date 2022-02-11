@@ -1,12 +1,13 @@
 name: docker pull and push
-on: workflow_call
- inputs:
-   ENVIRONMENT:
-     required: true
-     type: string
-   secrets:
-     required: true
-     type: string
+on: 
+ workflow_call:
+   inputs:
+     ENVIRONMENT:
+       required: true
+       type: string
+     secrets:
+       required: true
+       type: string
 jobs:
   build:
     runs-on: ubuntu-latest
