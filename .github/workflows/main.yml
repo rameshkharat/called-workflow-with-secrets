@@ -1,5 +1,12 @@
 name: docker pull and push
 on: workflow_call
+ inputs:
+   username:
+     required: true
+     type: string
+   secrets:
+     required: true
+     type: string
 jobs:
   build:
     runs-on: ubuntu-latest
