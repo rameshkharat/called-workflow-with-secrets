@@ -1,3 +1,4 @@
+
 name: docker pull and push
 on: 
   workflow_call:
@@ -24,9 +25,18 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    - name: image create    
+    
+    - name: Set the tag
       run: |
-        docker build . -f 1.df -t kharatramesh/vadapavimages:web4
-    - name: docker push
-      run: | 
-        docker push kharatramesh/vadapavimages:web4
+          if [ -z "${{inputs.tag}}" ]
+          then
+            echo "final_tag=latest" >> $GITHUB_ENV
+          else
+            echo "final_tag=${{inputs.tag}}" >> $GITHUB_ENV
+          fi
+    - name: Build and Push the Image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: ${{secrets.DOCKER_USER}}/${{inputs.image_name}}:${{env.final_tag}}
