@@ -1,0 +1,19 @@
+name: docker pull and push
+on: workflow_call
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - name: image create    
+      run: |
+        docker build . -f 1.df -t kharatramesh/vadapavimages:web4
+    - name: docker push
+      run: | 
+        docker push kharatramesh/vadapavimages:web4
